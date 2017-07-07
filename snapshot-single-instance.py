@@ -6,7 +6,7 @@ import sys
 import requests
 
 ###### Retention in days ######
-Retention = 0     #Specify retention here
+Retention = 4     #Specify retention here
 ###############################
 #This scipt takes SnapShot of all volumes for the current instance where this script is configured. 
 #snapshots will be removed accoding to the retention period.
@@ -14,8 +14,8 @@ Retention = 0     #Specify retention here
 ##### Server Requirements ####################
 # AWS CLI - # pip install awscli , # aws configure
 # Python3 -   Default in all servers.
-# Pip     - # apt-get install -y python3-pip
-# Boto3   - # pip install boto3
+# Pip3     - # apt-get install -y python3-pip
+# Boto3   - # pip3 install boto3
 #########################################
 # Written by Toji K Dominic 
 # tojikdominic@gmail.com +91 9747389586
@@ -64,7 +64,7 @@ for time in response['Snapshots']:
   time_now = datetime.datetime.now()
   D = time_now - snap_time
   Days=int(D.days)
-  if Days >= Retention:
+  if Days > Retention:
     try:
       del_snap = client.delete_snapshot(SnapshotId=time['SnapshotId'])
       if del_snap['ResponseMetadata']['HTTPStatusCode'] == 200:
